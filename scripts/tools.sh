@@ -92,9 +92,14 @@ function build-repo
 
 function add-source-to-bash
 {
-	local SOURCE=". $1"
-	if cat ~/.bashrc | grep -ivqw $SOURCE; then
-		echo "Adding source: $1"
-		echo $SOURCE >> ~/.bashrc
+	cd `dirname $1`
+	local SOURCE=`pwd`/`basename -- $1`
+	. $SOURCE
+	if cat $HOME/.bashrc | grep -iqw $SOURCE; then
+		echo "$SOURCE has already been added to bashrc"
+	else
+		echo "Adding source $1 to bashrc"
+		echo ". $SOURCE" >> $HOME/.bashrc
 	fi
+	cd - >/dev/null
 }

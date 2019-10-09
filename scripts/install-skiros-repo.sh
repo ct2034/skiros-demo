@@ -39,4 +39,5 @@ install-repo-dependencies $1
 install-special-dependencies $1
 add-source-to-bash "/opt/ros/`rosversion -d`/setup.bash"
 build-repo $1
-add-source-to-bash "`pwd`/$1/devel/setup.bash"
+add-source-to-bash "`pwd`/devel/setup.bash"
+bash
