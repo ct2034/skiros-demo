@@ -86,11 +86,15 @@ function install-repo-dependencies
 function build-repo
 {
   cd $1
-  . /opt/ros/`rosversion -d`/setup.bash
   catkin build -c --no-notify -s
-  echo "Sourcing `pwd`/devel/setup.bash"
-  . `pwd`/devel/setup.bash
   cd - >/dev/null
 }
 
-
+function add-source-to-bash
+{
+	local SOURCE=". $1"
+	if cat ~/.bashrc | grep -ivqw $SOURCE; then
+		echo "Adding source: $1"
+		echo $SOURCE >> ~/.bashrc
+	fi
+}
