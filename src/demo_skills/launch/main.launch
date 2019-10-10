@@ -3,7 +3,7 @@
   <arg name="deploy" default="true"/>
 
   <arg name="skill_libraries" default="[demo_skills, skiros2_std_skills]"/>
-  <arg name="skill_list" default="[spawn_random, move, patrol, follow, orbit, demo]"/>
+  <arg name="skill_list" default="[spawn_random, move, patrol, follow, orbit]"/>
   <arg name="primitive_list" default="[]"/>
 
   <arg name="robot_ontology_prefix" default="turtlebot"/>

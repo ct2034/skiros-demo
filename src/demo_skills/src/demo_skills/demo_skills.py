@@ -138,34 +138,8 @@ class orbit(SkillBase):
     def expand(self, skill):
         skill.setProcessor(ParallelFs())
         skill(
-            self.skill(ParallelFs(), remap={"Turtle": "Turtle1", "Target": "Turtle2"})(
-                self.skill("Follow", "follow")
-            ),
-            self.skill(ParallelFs(), remap={"Turtle": "Turtle2", "Target": "Turtle1"})(
-                self.skill("Follow", "follow")
-            ),
-            self.skill("Wait", "wait", specify={"Duration": 10000.0})
-        )
-
-
-
-
-class demo(SkillBase):
-    def createDescription(self):
-        self.setDescription(Orbit(), self.__class__.__name__)
-
-    def expand(self, skill):
-        # l = "Linear{}".format(self.params["Turtle"].value.label)
-        # a = "Angular{}".format(self.params["Turtle"].value.label)
-
-        skill.setProcessor(ParallelFs())
-        skill(
-            self.skill(ParallelFs(), remap={"Turtle": "Turtle1"})(
-                self.skill("Patrol", "patrol", specify={"Once": False})
-            ),
-            self.skill(ParallelFs(), remap={"Turtle": "Turtle2", "Target": "Turtle1"})(
-                self.skill("Follow", "follow")
-            ),
+            self.skill("Follow", "follow", remap={"Turtle": "Turtle1", "Target": "Turtle2"}),
+            self.skill("Follow", "follow", remap={"Turtle": "Turtle2", "Target": "Turtle1"}),
             self.skill("Wait", "wait", specify={"Duration": 10000.0})
         )
 
