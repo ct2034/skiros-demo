@@ -22,9 +22,7 @@ function check-params
 
 function install-special-dependencies
 {
-  cd $1
   ./src/skiros2/skiros2/skiros2/scripts/install_fd_task_planner.sh $1
-  cd - >/dev/null
 }
 
 
@@ -35,9 +33,10 @@ SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 check-params $*
 install-pkgs git ros-$ROS-ros python-catkin-tools
 download-repo $REPO $1
-install-repo-dependencies $1
-install-special-dependencies $1
+cd $1
+install-repo-dependencies $ROS
+install-special-dependencies
 add-source-to-bash "/opt/ros/$ROS/setup.bash"
-build-repo $1
+build-repo
 add-source-to-bash "`pwd`/devel/setup.bash"
 bash
