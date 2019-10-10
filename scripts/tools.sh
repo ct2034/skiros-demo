@@ -78,7 +78,7 @@ function install-repo-dependencies
 {
   cd $1
   rosdep update
-  sudo rosdep install --from-paths src --ignore-src --rosdistro=`rosversion -d` -y
+  sudo rosdep install --from-paths src --ignore-src --rosdistro=melodic -y
   find . -name "requirements.txt" | xargs -L1 python -m pip install --user -r
   cd - >/dev/null
 }
