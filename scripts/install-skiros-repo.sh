@@ -37,7 +37,7 @@ install-pkgs git ros-$ROS-ros python-catkin-tools
 download-repo $REPO $1
 install-repo-dependencies $1
 install-special-dependencies $1
-add-source-to-bash "/opt/ros/`rosversion -d`/setup.bash"
+add-source-to-bash "/opt/ros/$ROS/setup.bash"
 build-repo $1
 add-source-to-bash "`pwd`/devel/setup.bash"
 bash
