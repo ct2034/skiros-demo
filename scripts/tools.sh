@@ -76,30 +76,23 @@ function download-repo
 
 function install-repo-dependencies
 {
-  cd $1
   rosdep update
-  sudo rosdep install --from-paths src --ignore-src --rosdistro=melodic -y
+  sudo rosdep install --from-paths src --ignore-src --rosdistro=$1 -y
   find . -name "requirements.txt" | xargs -L1 python -m pip install --user -r
-  cd - >/dev/null
 }
 
 function build-repo
 {
-  cd $1
   catkin build -c --no-notify -s
-  cd - >/dev/null
 }
 
 function add-source-to-bash
 {
-	cd `dirname $1`
-	local SOURCE=`pwd`/`basename -- $1`
-	. $SOURCE
-	if cat $HOME/.bashrc | grep -iqw $SOURCE; then
+	. $1
+	if cat $HOME/.bashrc | grep -iqw $1; then
 		echo "$SOURCE has already been added to bashrc"
 	else
 		echo "Adding source $1 to bashrc"
-		echo ". $SOURCE" >> $HOME/.bashrc
+		echo ". $1" >> $HOME/.bashrc
 	fi
-	cd - >/dev/null
 }
