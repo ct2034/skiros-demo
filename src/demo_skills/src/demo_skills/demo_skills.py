@@ -14,7 +14,6 @@ class SpawnRandom(SkillDescription):
         self.addParam("RangeX", [2.0, 8.0], ParamTypes.Optional)
         self.addParam("RangeY", [2.0, 8.0], ParamTypes.Optional)
         self.addParam("RangeR", [0.0, 360.0], ParamTypes.Optional)
-        # self.addParam("Turtle", Element("cora:Robot"), ParamTypes.Optional)
 
 class spawn_random(SkillBase):
     def createDescription(self):
@@ -52,10 +51,13 @@ class move(SkillBase):
         t = self.params["Duration"].value
         v = self.params["Distance"].value / t
         w = self.params["Angle"].value / t
+        uid = id(self)
         skill.setProcessor(ParallelFs())
         skill(
             self.skill("Monitor", "monitor"),
-            self.skill("Command", "command", specify={"Linear": v, "Angular": w}),
+            self.skill("Command", "command",
+                       specify={"Linear{}".format(uid): v, "Angular{}".format(uid): w},
+                       remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
             self.skill("Wait", "wait", specify={"Duration": t})
         )
 
@@ -112,11 +114,14 @@ class follow(SkillBase):
         self.setDescription(Follow(), self.__class__.__name__)
 
     def expand(self, skill):
+        uid = id(self)
         skill.setProcessor(ParallelFs())
         skill(
             self.skill("Monitor", "monitor"),
-            self.skill("PoseController", "pose_controller", specify={"MinVel": 2.0}),
-            self.skill("Command", "command"),
+            self.skill("PoseController", "pose_controller", specify={"MinVel": 2.0},
+                       remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
+            self.skill("Command", "command",
+                       remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
             self.skill("Wait", "wait", specify={"Duration": 10000.0})
         )
 

@@ -84,8 +84,9 @@ class command(PrimitiveBase):
         return True
 
     def execute(self):
+        turtle = self.params["Turtle"].value.getProperty("turtlebot:TurtleName").value
         self._send_command(self.params["Linear"].value, self.params["Angular"].value)
-        return self.step("Running")
+        return self.step("{}: moving at [{} {}]".format(turtle, self.params["Linear"].value, self.params["Angular"].value))
 
 
 #################################################################################
@@ -110,6 +111,7 @@ class monitor(PrimitiveBase):
     def onEnd(self):
         self._pose_sub.unregister()
         self._pose_sub = None
+        return True
 
     def _monitor(self, msg):
         self._pose = [msg.x, msg.y, msg.theta]
