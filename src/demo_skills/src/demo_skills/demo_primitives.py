@@ -138,12 +138,12 @@ class monitor(PrimitiveBase):
 class PoseController(SkillDescription):
     def createDescription(self):
         #=======Params=========
-        self.addParam("Catch", False, ParamTypes.Required)
         self.addParam("Turtle", Element("cora:Robot"), ParamTypes.Required)
         self.addParam("Target", Element("sumo:Object"), ParamTypes.Required)
         self.addParam("Linear", float, ParamTypes.Optional)
         self.addParam("Angular", float, ParamTypes.Optional)
         self.addParam("MinVel", float, ParamTypes.Optional)
+        self.addParam("MinDist", float, ParamTypes.Optional)
 
 class pose_controller(PrimitiveBase):
     def createDescription(self):
@@ -161,7 +161,7 @@ class pose_controller(PrimitiveBase):
         if self.params["MinVel"].value is not None:
             distance = max(self.params["MinVel"].value, distance)
 
-        if self.params["Catch"].value and distance <= 0.001:
+        if self.params["MinDist"].value is not None and distance <= self.params["MinDist"].value:
             return self.success("{} caught {}".format(turtle.label, target.label))
 
         turtle_rot = turtle.getData(":OrientationEuler")[2]

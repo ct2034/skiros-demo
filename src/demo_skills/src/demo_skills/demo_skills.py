@@ -118,7 +118,7 @@ class follow(SkillBase):
         skill.setProcessor(ParallelFs())
         skill(
             self.skill("Monitor", "monitor"),
-            self.skill("PoseController", "pose_controller", specify={"MinVel": 2.0},
+            self.skill("PoseController", "pose_controller", specify={"MinVel": 2.0, "MinDist": 0.001},
                        remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
             self.skill("Command", "command",
                        remap={"Linear": "Linear{}".format(uid), "Angular": "Angular{}".format(uid)}),
@@ -144,6 +144,7 @@ class orbit(SkillBase):
         skill.setProcessor(ParallelFs())
         skill(
             self.skill("Follow", "follow", remap={"Turtle": "Turtle1", "Target": "Turtle2"}),
+            # self.skill("Patrol", "patrol", remap={"Turtle": "Turtle2"}, specify={"Once": False}),
             self.skill("Follow", "follow", remap={"Turtle": "Turtle2", "Target": "Turtle1"}),
             self.skill("Wait", "wait", specify={"Duration": 10000.0})
         )
